@@ -17,6 +17,21 @@ class UsuarioSchema(BaseModel):
     estado: str = "CE"
     data_insercao: str = "dd/mm/aaaa"
 
+class AtualizaUsuarioSchema(BaseModel):
+    """ Define como um usuário atualizado deve ser representado
+    """
+    id: int = 1
+    nome: str = "Fulano da Silva"
+    cpf: str = "999.888.777.66"
+    email: str = "fulano@"
+    cep: str = "55555-444"
+    rua: str = "Rua dos Milagres"
+    numero: int = 123
+    complemento: str = "A"
+    cidade: str = "Fortaleza"
+    estado: str = "CE"
+    data_insercao: str = "dd/mm/aaaa"    
+
 class UsuarioBuscaPorNomeSchema(BaseModel):
     """ Define como deve ser a estrutura que representa a busca. Que será
         feita apenas com base no nome do Usuário.
@@ -30,7 +45,7 @@ class UsuarioBuscaPorCpfSchema(BaseModel):
     termo: str = "99988877766"
 
 
-class UsuarioBuscaPorIDSchema(BaseModel):
+class UsuarioPorIDSchema(BaseModel):
     """ Define como deve ser a estrutura que representa a busca. Que será
         feita apenas com base no ID do usuário.
     """

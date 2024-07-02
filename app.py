@@ -95,7 +95,7 @@ def get_usuarios():
 
 @app.get('/busca_usuario_por_id', tags=[usuario_tag],
          responses={"200": UsuarioViewSchema, "404": ErrorSchema})
-def busca_usuario_por_id(query: UsuarioBuscaPorIDSchema):
+def busca_usuario_por_id(query: UsuarioPorIDSchema):
     """Faz a busca por um Usuário a partir do ID
 
     Retorna uma representação do usuário encontrado.
@@ -166,9 +166,62 @@ def busca_usuario_por_cpf(query: UsuarioBuscaPorCpfSchema):
         return apresenta_usuario(usuario), 200
 
 
-@app.delete('/deletar_usuario', tags=[usuario_tag],
+@app.put('/atualiza_usuario', tags=[usuario_tag],
+         responses={"200": UsuarioViewSchema, "404": ErrorSchema, "400": ErrorSchema})
+def atualiza_usuario(form: AtualizaUsuarioSchema):
+    """Atualiza um Usuário existente na base de dados
+
+    Retorna uma representação dos usuários.
+    """
+
+    usuario_id = form.id
+    
+    logger.info(f"Atualizando usuário com ID: {usuario_id}")
+    try:
+        # criando conexão com a base
+        session = Session()
+        # buscando o usuário pelo ID
+        usuario = session.query(Usuario).filter_by(id=usuario_id).first()
+
+        if not usuario:
+            error_msg = "Usuário não encontrado"
+            logger.warning(f"Erro ao atualizar usuário com ID '{usuario_id}', {error_msg}")
+            return {"message": error_msg}, 404
+
+        # atualizando os dados do usuário
+        usuario.nome = form.nome
+        usuario.cpf = form.cpf
+        usuario.email = form.email
+        usuario.cep = form.cep
+        usuario.rua = form.rua
+        usuario.numero = form.numero
+        usuario.complemento = form.complemento
+        usuario.cidade = form.cidade
+        usuario.estado = form.estado
+
+        print(usuario)
+
+        # efetivando o comando de atualização na tabela
+        session.commit()
+        logger.info("Atualizado usuário: %s" % usuario)
+        return apresenta_usuario(usuario), 200
+
+    except IntegrityError as e:
+        # como a duplicidade do CPF é a provável razão do IntegrityError
+        error_msg = "Usuário de mesmo CPF já salvo na base :/"
+        logger.warning(f"Erro ao atualizar usuário com ID '{usuario_id}', {error_msg}")
+        return {"message": error_msg}, 400
+
+    except Exception as e:
+        # caso um erro fora do previsto
+        error_msg = "Não foi possível atualizar o usuário :/"
+        logger.warning(f"Erro ao atualizar usuário com ID '{usuario_id}', {error_msg}")
+        return {"message": error_msg}, 400
+
+
+@app.delete('/exclui_usuario', tags=[usuario_tag],
             responses={"200": UsuarioDelSchema, "404": ErrorSchema})
-def del_usuario(query: UsuarioBuscaPorIDSchema):
+def exclui_usuario(query: UsuarioPorIDSchema):
     """Deleta um Produto a partir do nome de produto informado
 
     Retorna uma mensagem de confirmação da remoção.

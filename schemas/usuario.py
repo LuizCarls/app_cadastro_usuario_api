@@ -15,7 +15,6 @@ class UsuarioSchema(BaseModel):
     complemento: str = "A"
     cidade: str = "Fortaleza"
     estado: str = "CE"
-    data_insercao: str = "dd/mm/aaaa"
 
 class AtualizaUsuarioSchema(BaseModel):
     """ Define como um usuário atualizado deve ser representado
@@ -36,13 +35,13 @@ class UsuarioBuscaPorNomeSchema(BaseModel):
     """ Define como deve ser a estrutura que representa a busca. Que será
         feita apenas com base no nome do Usuário.
     """
-    termo: str = "Fulano da Silva"
+    nome: str = "Fulano da Silva"
 
 class UsuarioBuscaPorCpfSchema(BaseModel):
     """ Define como deve ser a estrutura que representa a busca. Que será
         feita apenas com base no nome do Usuário.
     """
-    termo: str = "99988877766"
+    cpf: str = "99988877766"
 
 
 class UsuarioPorIDSchema(BaseModel):
@@ -104,7 +103,8 @@ class UsuarioViewSchema(BaseModel):
     numero: int = 123
     complemento: str = "A"
     cidade: str = "Fortaleza"
-    estado: str = "CE"    
+    estado: str = "CE"   
+    data_insercao: str = "dd/mm/aaaa" 
 
 
 class UsuarioDelSchema(BaseModel):
@@ -113,7 +113,6 @@ class UsuarioDelSchema(BaseModel):
     """
     mesage: str
     nome: str
-    id: int
 
 
 def apresenta_usuario(usuario: Usuario):

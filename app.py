@@ -25,9 +25,9 @@ def home():
     return redirect('/openapi')
 
 
-@app.post('/usuario', tags=[usuario_tag],
+@app.post('/adiciona_usuario', tags=[usuario_tag],
           responses={"200": UsuarioViewSchema, "409": ErrorSchema, "400": ErrorSchema})
-def add_usuario(form: UsuarioSchema):
+def adiciona_usuario(form: UsuarioSchema):
     """Adiciona um novo Usuário à base de dados
 
     Retorna uma representação dos usuários.
@@ -71,9 +71,9 @@ def add_usuario(form: UsuarioSchema):
         return {"mesage": error_msg}, 400
 
 
-@app.get('/usuarios', tags=[usuario_tag],
+@app.get('/buscar_usuarios', tags=[usuario_tag],
          responses={"200": ListagemUsuariosSchema, "404": ErrorSchema})
-def get_usuarios():
+def buscar_usuarios():
     """Faz a busca por todos os Usuários cadastrados
 
     Retorna uma representação da listagem de usuários.
@@ -93,9 +93,9 @@ def get_usuarios():
         return apresenta_usuarios(usuarios), 200
 
 
-@app.get('/busca_usuario_por_id', tags=[usuario_tag],
+@app.get('/buscar_usuario_por_id', tags=[usuario_tag],
          responses={"200": UsuarioViewSchema, "404": ErrorSchema})
-def busca_usuario_por_id(query: UsuarioPorIDSchema):
+def buscar_usuario_por_id(query: UsuarioPorIDSchema):
     """Faz a busca por um Usuário a partir do ID
 
     Retorna uma representação do usuário encontrado.
@@ -118,14 +118,14 @@ def busca_usuario_por_id(query: UsuarioPorIDSchema):
         return apresenta_usuario(usuario), 200
     
 
-@app.get('/busca_usuario_por_nome', tags=[usuario_tag],
+@app.get('/buscar_usuario_por_nome', tags=[usuario_tag],
          responses={"200": UsuarioViewSchema, "404": ErrorSchema})
-def busca_usuario_por_nome(query: UsuarioBuscaPorNomeSchema):
+def buscar_usuario_por_nome(query: UsuarioBuscaPorNomeSchema):
     """Faz a busca por usuários por nome
 
     Retorna uma representação dos usuários que possuem o nome associado.
     """
-    nome = unquote(query.termo)
+    nome = unquote(query.nome)
     logger.info(f"Fazendo a busca por nome: {nome}")
     # criando conexão com a base
     session = Session()
@@ -141,14 +141,14 @@ def busca_usuario_por_nome(query: UsuarioBuscaPorNomeSchema):
         return apresenta_usuarios(Usuarios), 200
     
 
-@app.get('/busca_usuario_por_cpf', tags=[usuario_tag],
+@app.get('/buscar_usuario_por_cpf', tags=[usuario_tag],
          responses={"200": UsuarioViewSchema, "404": ErrorSchema})
-def busca_usuario_por_cpf(query: UsuarioBuscaPorCpfSchema):
+def buscar_usuario_por_cpf(query: UsuarioBuscaPorCpfSchema):
     """Faz a busca por um Usuário a partir do cpf
 
     Retorna uma representação do usuário encontrado.
     """
-    cpf = unquote(query.termo)
+    cpf = unquote(query.cpf)
     logger.info(f"Fazendo a busca por nome: {cpf}")
     # criando conexão com a base
     session = Session()
@@ -166,9 +166,9 @@ def busca_usuario_por_cpf(query: UsuarioBuscaPorCpfSchema):
         return apresenta_usuario(usuario), 200
 
 
-@app.put('/atualiza_usuario', tags=[usuario_tag],
+@app.put('/atualizar_usuario', tags=[usuario_tag],
          responses={"200": UsuarioViewSchema, "404": ErrorSchema, "400": ErrorSchema})
-def atualiza_usuario(form: AtualizaUsuarioSchema):
+def atualizar_usuario(form: AtualizaUsuarioSchema):
     """Atualiza um Usuário existente na base de dados
 
     Retorna uma representação dos usuários.
@@ -219,9 +219,9 @@ def atualiza_usuario(form: AtualizaUsuarioSchema):
         return {"message": error_msg}, 400
 
 
-@app.delete('/exclui_usuario', tags=[usuario_tag],
+@app.delete('/excluir_usuario', tags=[usuario_tag],
             responses={"200": UsuarioDelSchema, "404": ErrorSchema})
-def exclui_usuario(query: UsuarioPorIDSchema):
+def excluir_usuario(query: UsuarioPorIDSchema):
     """Deleta um Produto a partir do nome de produto informado
 
     Retorna uma mensagem de confirmação da remoção.

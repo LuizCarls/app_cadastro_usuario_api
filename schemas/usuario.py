@@ -7,9 +7,9 @@ class UsuarioSchema(BaseModel):
     """ Define como um novo usuário a ser inserido deve ser representado
     """
     nome: str = "Fulano da Silva"
-    cpf: str = "999.888.777.66"
+    cpf: str = "99988877766"
     email: str = "fulano@"
-    cep: str = "55555-444"
+    cep: str = "55555444"
     rua: str = "Rua dos Milagres"
     numero: int = 123
     complemento: str = "A"
@@ -21,9 +21,9 @@ class AtualizaUsuarioSchema(BaseModel):
     """
     id: int = 1
     nome: str = "Fulano da Silva"
-    cpf: str = "999.888.777.66"
+    cpf: str = "99988877766"
     email: str = "fulano@"
-    cep: str = "55555-444"
+    cep: str = "55555444"
     rua: str = "Rua dos Milagres"
     numero: int = 123
     complemento: str = "A"
@@ -54,9 +54,9 @@ class UsuarioViewSchema(BaseModel):
     """ Define como um novo usuário a ser inserido deve ser representado
     """
     nome: str = "Fulano da Silva"
-    cpf: str = "999.888.777.66"
+    cpf: str = "99988877766"
     email: str = "fulano@"
-    cep: str = "55555-444"
+    cep: str = "55555444"
     rua: str = "Rua dos Milagres"
     numero: int = 123
     complemento: str = "A"
@@ -96,9 +96,9 @@ class UsuarioViewSchema(BaseModel):
     """
     id: int = 1
     nome: str = "Fulano da Silva"
-    cpf: str = "999.888.777.66"
+    cpf: str = "99988877766"
     email: str = "fulano@"
-    cep: str = "55555-444"
+    cep: str = "55555444"
     rua: str = "Rua dos Milagres"
     numero: int = 123
     complemento: str = "A"
